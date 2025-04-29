@@ -1,0 +1,30 @@
+<html>
+    <head><title>Student</title>
+        <body>
+            <h1>This is Index Page Admin</h1>
+            <a href="{% url 'adminLogout' %}">Logout</a>
+
+            <p>Add Books : <p>
+            <form method='post' action="{% url 'addBook' %}">
+            {% csrf_token %}
+                Name of book : <input name='name' type='text'>
+                Subject of book : <input name='subject' type='text'>
+                Author of book : <input name='author' type='text'>
+                Quantity of book : <input name='quantity' type='text'>
+                <br>
+                <button type='submit'>Add It</button>
+            </form>
+            <br><br>
+            <p>Here are Users requesting for book</p>
+            {% for borrow in borrowed %}
+            <div>
+                User : {{borrow.user}}<br>
+                Name : {{borrow.name}}<br>
+                Subject : {{borrow.quantity}}<br>
+                Is approved? : No<br>
+                <a href='adminUpdate/{{borrow.id}}/'>Approve</a> || <a href='adminReject/{{borrow.id}}/'>Reject</a>
+                <br><br>
+            </div>
+        {% endfor %}
+        </body>
+</html>

@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <title>This is Index</title>
+    </head>
+    <body>
+        <h1>This is index<h1>
+            <h2> Welcome {{request.user}} </h2>
+            <a href="{% url 'logout' %}"> [__Logout__] </a>
+
+            <p>Here is list of borrowed book</p>
+            {% for app in approved %}
+            <div>
+                Name : {{app.name}}<br>
+                Quantity : {{app.quantity}}<br>
+                Issued Date : {{app.date}}<br>
+                <br><br>
+            </div>
+        {% endfor %}
+        <br>
+        <p>Penalty : <div>{{penalty.amount}}</div></p>
+            <p>Want to borrow a book? fill the form</p>
+        <form method='post' action="{% url 'borrowAsk' %}">
+            {% csrf_token %}
+            Name of book : <input name='name' type='text'>
+            How Many Books ? : <input name='quantity' type='number'>
+            <br>
+            <button type='submit'>Ask to borrow</button>
+        </form>
+
+        <br><br>
+        <p> Here Are available books : </p>
+        {% for book in books %}
+            <div>
+                Name : {{book.name}}<br>
+                Subject : {{book.subject}}<br>
+                Author : {{book.author}}<br>
+               {% if book.quantity == 0 %}
+                    Is available : No
+                {% else %}
+                    Is available : Yes
+                {% endif %}
+                <br><br>
+            </div>
+        {% endfor %}
+
+        <br><br><br>
+        <p>Here is your borrow history</p>
+        {% for borrow in borrowed %}
+            <div>
+                Name : {{borrow.name}}<br>
+                Subject : {{borrow.quantity}}<br>
+                {% if borrow.approved == False %}
+                    Is approved? : No
+                {% else %}
+                    Is approved? : Yes
+                    <br>
+                    Issue Date : {{borrow.date}}
+                {% endif %}
+                <br><br>
+            </div>
+        {% endfor %}
+    </body>
+</html>
